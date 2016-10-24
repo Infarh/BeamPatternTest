@@ -3,7 +3,7 @@
 namespace BeamPatternTest
 {
     /// <summary>Всенаправленная антенна</summary>
-    class Uniform : Antenna
+    public class Uniform : Antenna
     {
         /// <summary>Диаграмма направленности</summary>
         /// <param name="th">Угол места</param>

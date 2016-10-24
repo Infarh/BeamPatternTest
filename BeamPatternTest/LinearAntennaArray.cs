@@ -5,11 +5,12 @@ using System.Numerics;
 namespace BeamPatternTest
 {
     /// <summary>ЛИнейная антенная решётка</summary>
-    class LinearAntennaArray : Antenna
+    public class LinearAntennaArray : Antenna
     {
         public static class AmplitudeDistribution
         {
-            public static Func<double, double> CosOnPedistal(double Delta) => x => (1 - Delta) * Math.Cos(Math.PI * x) + Delta;
+            public static Func<double, double> CosOnPedistal(double Delta) => 
+                x => (1 - Delta) * Math.Cos(Math.PI * x) + Delta;
         }
 
         /// <summary>Шаг между излучателями</summary>
@@ -31,6 +32,16 @@ namespace BeamPatternTest
 
         /// <summary>Длина решётки</summary>
         public double L => d * (N - 1);
+
+        public double dx
+        {
+            get { return d; }
+            set
+            {
+                d = value;
+                CalculateK();
+            }
+        }
 
         /// <summary>Число элементов решётки</summary>
         public int N => elements.Length;

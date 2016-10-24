@@ -6,7 +6,7 @@ namespace BeamPatternTest
     /// <summary>
     /// Антенна
     /// </summary>
-    abstract class Antenna
+    public abstract class Antenna
     {
         /// <summary>КНД</summary>
         public double D => GetKND();

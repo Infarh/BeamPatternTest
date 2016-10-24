@@ -4,7 +4,7 @@ using System.Numerics;
 namespace BeamPatternTest
 {
     /// <summary>Симметричный вибратор</summary>
-    class Vibrator : Antenna
+    public class Vibrator : Antenna
     {
         /// <summary>Длина вибратора</summary>
         private double l;

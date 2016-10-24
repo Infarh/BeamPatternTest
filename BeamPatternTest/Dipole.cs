@@ -6,7 +6,7 @@ namespace BeamPatternTest
     /// <summary>
     /// Диполь Герца
     /// </summary>
-    class Dipole : Antenna
+    public class Dipole : Antenna
     {
         public override Complex Pattern(double th)
         {
