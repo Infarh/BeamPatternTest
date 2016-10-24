@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AntennaArray>
+  <Element K="1-2i">
+    <Dipole/>
+  </Element>
+  
+  <Element K="2">
+    <Vibrator L="0.5"/>
+  </Element>
+    
+  <Element K="2i">
+    <AntennaArray>
+      <Element></Element> 
+      <Element></Element> 
+    </AntennaArray>
+  </Element>
+  
+  <Element K="1-2i"></Element>
+</AntennaArray>

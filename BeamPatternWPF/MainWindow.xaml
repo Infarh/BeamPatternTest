@@ -1,0 +1,30 @@
+﻿<Window x:Class="BeamPatternWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BeamPatternWPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Button Margin="27,59,242,71" RenderTransformOrigin="0.5,0.5">
+            <Button.Effect>
+                <BlurEffect/>
+            </Button.Effect>
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-14.787"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+            <StackPanel Width="100">
+                <TextBlock>123</TextBlock>
+                <ProgressBar Height="20" Value="0.5"/>
+                <TextBox/>
+                <Button Content="qwe"/>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>

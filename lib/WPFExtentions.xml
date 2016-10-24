@@ -1,0 +1,1419 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WPFExtentions</name>
+    </assembly>
+    <members>
+        <member name="T:WPFExtentions.Commands.AsyncTaskCommand`1">
+            <summary>Асинхронная команда</summary>
+            <example>
+            Url = "http://www.example.com/";
+            CountUrlBytesCommand = new AsyncCommand(async () => { ByteCount = await MyService.DownloadAndCountBytesAsync(Url); });
+            CountUrlBytesCommand = new AsyncCommand(MyService.DownloadAndCountBytesAsync(Url));
+            </example>
+        </member>
+        <member name="T:WPFExtentions.Commands.CommandBehavior">
+            <summary>Defines the attached properties to create a CommandBehaviorBinding</summary>
+        </member>
+        <member name="F:WPFExtentions.Commands.CommandBehavior.f_BehaviorProperty">
+            <summary>Behavior Attached Dependency Property</summary>
+        </member>
+        <member name="M:WPFExtentions.Commands.CommandBehavior.Getf_Behavior(System.Windows.DependencyObject)">
+            <summary>Gets the Behavior property</summary>
+        </member>
+        <member name="M:WPFExtentions.Commands.CommandBehavior.Setf_Behavior(System.Windows.DependencyObject,WPFExtentions.Commands.CommandBehaviorBinding)">
+            <summary>
+            Sets the Behavior property.  
+            </summary>
+        </member>
+        <member name="F:WPFExtentions.Commands.CommandBehavior.CommandProperty">
+            <summary>Command Attached Dependency Property</summary>
+        </member>
+        <member name="M:WPFExtentions.Commands.CommandBehavior.GetCommand(System.Windows.DependencyObject)">
+            <summary>
+            Gets the Command property.  
+            </summary>
+        </member>
+        <member name="M:WPFExtentions.Commands.CommandBehavior.SetCommand(System.Windows.DependencyObject,System.Windows.Input.ICommand)">
+            <summary>
+            Sets the Command property. 
+            </summary>
+        </member>
+        <member name="M:WPFExtentions.Commands.CommandBehavior.OnCommandChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>Handles changes to the Command property</summary>
+        </member>
+        <member name="F:WPFExtentions.Commands.CommandBehavior.CommandParameterProperty">
+            <summary>CommandParameter Attached Dependency Property</summary>
+        </member>
+        <member name="M:WPFExtentions.Commands.CommandBehavior.GetCommandParameter(System.Windows.DependencyObject)">
+            <summary>
+            Gets the CommandParameter property.  
+            </summary>
+        </member>
+        <member name="M:WPFExtentions.Commands.CommandBehavior.SetCommandParameter(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Sets the CommandParameter property. 
+            </summary>
+        </member>
+        <member name="M:WPFExtentions.Commands.CommandBehavior.OnCommandParameterChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Handles changes to the CommandParameter property.
+            </summary>
+        </member>
+        <member name="F:WPFExtentions.Commands.CommandBehavior.EventProperty">
+            <summary>Event Attached Dependency Property</summary>
+        </member>
+        <member name="M:WPFExtentions.Commands.CommandBehavior.GetEvent(System.Windows.DependencyObject)">
+            <summary>
+            Gets the Event property.  This dependency property 
+            indicates ....
+            </summary>
+        </member>
+        <member name="M:WPFExtentions.Commands.CommandBehavior.SetEvent(System.Windows.DependencyObject,System.String)">
+            <summary>
+            Sets the Event property.  This dependency property 
+            indicates ....
+            </summary>
+        </member>
+        <member name="M:WPFExtentions.Commands.CommandBehavior.OnEventChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>Handles changes to the Event property</summary>
+        </member>
+        <member name="T:WPFExtentions.Commands.CommandBehaviorBinding">
+            <summary>Defines the command behavior binding</summary>
+        </member>
+        <member name="P:WPFExtentions.Commands.CommandBehaviorBinding.Owner">
+            <summary>
+            Get the owner of the CommandBinding ex: a Button
+            This property can only be set from the BindEvent Method
+            </summary>
+        </member>
+        <member name="P:WPFExtentions.Commands.CommandBehaviorBinding.Command">
+            <summary>
+            The command to execute when the specified event is raised
+            </summary>
+        </member>
+        <member name="P:WPFExtentions.Commands.CommandBehaviorBinding.CommandParameter">
+            <summary>
+            Gets or sets a CommandParameter
+            </summary>
+        </member>
+        <member name="P:WPFExtentions.Commands.CommandBehaviorBinding.EventName">
+            <summary>
+            The event name to hook up to
+            This property can only be set from the BindEvent Method
+            </summary>
+        </member>
+        <member name="P:WPFExtentions.Commands.CommandBehaviorBinding.Event">
+            <summary>
+            The event info of the event
+            </summary>
+        </member>
+        <member name="P:WPFExtentions.Commands.CommandBehaviorBinding.EventHandler">
+            <summary>
+            Gets the EventHandler for the binding with the event
+            </summary>
+        </member>
+        <member name="M:WPFExtentions.Commands.CommandBehaviorBinding.ExecuteCommand">
+            <summary>
+            Executes the command
+            </summary>
+        </member>
+        <member name="M:WPFExtentions.Commands.CommandBehaviorBinding.Dispose">
+            <summary>
+            Unregisters the EventHandler from the Event
+            </summary>
+        </member>
+        <member name="T:WPFExtentions.Commands.EventHandlerGenerator">
+            <summary>Generates delegates according to the specified signature on runtime</summary>
+        </member>
+        <member name="M:WPFExtentions.Commands.EventHandlerGenerator.CreateDelegate(System.Type,System.Reflection.MethodInfo,System.Object)">
+            <summary>
+            Generates a delegate with a matching signature of the supplied eventHandlerType
+            This method only supports Events that have a delegate of type void
+            </summary>
+            <param name="EventHandlerType"></param>
+            <param name="MethodToInvoke">The method to invoke</param>
+            <param name="MethodInvoker">The object where the method resides</param>
+            <returns>Returns a delegate with the same signature as eventHandlerType that calls the methodToInvoke inside</returns>
+            <exception cref="T:System.ApplicationException">Delegate has a return type. This only supprts event handlers that are void</exception>
+        </member>
+        <member name="T:WPFExtentions.Commands.LamdaCommand">
+            <summary>
+            Лямда-команда
+            Позволяет быстро указывать методы для выполнения основного тела команды и определения возможности выполнения
+            </summary>
+        </member>
+        <member name="E:WPFExtentions.Commands.LamdaCommand.CanExecuteChanged">
+            <summary>Событие возникает при изменении возможности исполнения команды</summary>
+        </member>
+        <member name="F:WPFExtentions.Commands.LamdaCommand.f_ExecuteAction">
+            <summary>Делегат основного тела команды</summary>
+        </member>
+        <member name="F:WPFExtentions.Commands.LamdaCommand.f_CanExecute">
+            <summary>Функция определения возможности исполнения команды</summary>
+        </member>
+        <member name="P:WPFExtentions.Commands.LamdaCommand.IsCanExecute">
+            <summary>Признак возможности исполнения</summary>
+        </member>
+        <member name="P:WPFExtentions.Commands.LamdaCommand.CanExecuteDelegate">
+            <summary>Функция определения возможности исполнения команды</summary>
+        </member>
+        <member name="F:WPFExtentions.Dialogs.ShowWindow.MaxWidthProperty">
+            <summary>Максимальная ширина окна</summary>
+        </member>
+        <member name="P:WPFExtentions.Dialogs.ShowWindow.MaxWidth">
+            <summary>Максимальная ширина окна</summary>
+        </member>
+        <member name="F:WPFExtentions.Dialogs.ShowWindow.MaxHeightProperty">
+            <summary>Максимальная высота окна</summary>
+        </member>
+        <member name="P:WPFExtentions.Dialogs.ShowWindow.MaxHeight">
+            <summary>Максимальная высота окна</summary>
+        </member>
+        <member name="F:WPFExtentions.Dialogs.ShowWindow.IconProperty">
+            <summary>Иконка окна</summary>
+        </member>
+        <member name="P:WPFExtentions.Dialogs.ShowWindow.Icon">
+            <summary>Иконка окна</summary>
+        </member>
+        <member name="F:WPFExtentions.Dialogs.ShowWindow.TopmostProperty">
+            <summary>Окно является окном верхнего уровня</summary>
+        </member>
+        <member name="P:WPFExtentions.Dialogs.ShowWindow.Topmost">
+            <summary>Окно является окном верхнего уровня</summary>
+        </member>
+        <member name="F:WPFExtentions.Dialogs.ShowWindow.OwnerProperty">
+            <summary>Окно - владелец</summary>
+        </member>
+        <member name="P:WPFExtentions.Dialogs.ShowWindow.Owner">
+            <summary>Окно - владелец</summary>
+        </member>
+        <member name="F:WPFExtentions.Dialogs.ShowWindow.WindowStateProperty">
+            <summary>Состояние окна</summary>
+        </member>
+        <member name="P:WPFExtentions.Dialogs.ShowWindow.WindowState">
+            <summary>Состояние окна</summary>
+        </member>
+        <member name="F:WPFExtentions.Dialogs.ShowWindow.StartupLocationProperty">
+            <summary>Начальное положение окна</summary>
+        </member>
+        <member name="P:WPFExtentions.Dialogs.ShowWindow.StartupLocation">
+            <summary>Начальное положение окна</summary>
+        </member>
+        <member name="F:WPFExtentions.Dialogs.ShowWindow.SizeToContentProperty">
+            <summary>Принцип автоматического изменения размеров окна</summary>
+        </member>
+        <member name="P:WPFExtentions.Dialogs.ShowWindow.SizeToContent">
+            <summary>Принцип автоматического изменения размеров окна</summary>
+        </member>
+        <member name="T:WPFExtentions.Field">
+            <summary>Поле данных</summary>
+        </member>
+        <member name="E:WPFExtentions.Field.PropertyChanged">
+            <summary>Событие возникает при изменении значения поля</summary>
+        </member>
+        <member name="E:WPFExtentions.Field.System#ComponentModel#INotifyPropertyChanged#PropertyChanged">
+            <summary>Событие возникает при изменении значения поля</summary>
+        </member>
+        <member name="M:WPFExtentions.Field.OnPropertyChanged(System.String)">
+            <summary>Метод генерации осбытия изменения свойства</summary>
+            <param name="PropertyName">Имя изменившегося свойства</param>
+        </member>
+        <member name="F:WPFExtentions.Field.ValueProperty">
+            <summary>Свойство зависимости, зранящее значение поля</summary>
+        </member>
+        <member name="M:WPFExtentions.Field.OnValueChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>Метод обработки изменения значения данных поля</summary>
+            <param name="D">Источник события</param>
+            <param name="E">Аргумент события</param>
+        </member>
+        <member name="P:WPFExtentions.Field.Value">
+            <summary>Свойство зависимости, зранящее значение поля</summary>
+        </member>
+        <member name="T:WPFExtentions.ObservableCollectionSyncWrapper`1">
+            <summary>Потоко-безопасная обёртка для <see cref="T:System.Collection.ObjectModel.ObservableCollection[T]"/></summary>
+            <typeparam name="T">Тип элемента коллекции</typeparam>
+        </member>
+        <member name="M:WPFExtentions.DeferredRefreshObservableCollection`1.OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
+            <summary>
+            Raises the <see cref="E:CollectionChanged" /> event.
+            </summary>
+            <param name="e">The instance containing the event data.</param>
+        </member>
+        <member name="M:WPFExtentions.DeferredRefreshObservableCollection`1.DeferRefresh">
+            <summary>
+            Отложить посылку уведомлений об изменении состава коллекции.
+            </summary>
+            <returns>Дескриптор.</returns>
+        </member>
+        <member name="T:WPFExtentions.DeferredRefreshObservableCollection`1.DeferRefreshHelper">
+            <summary>
+            Дескриптор отложенных изменений.
+            </summary>
+        </member>
+        <member name="M:WPFExtentions.DeferredRefreshObservableCollection`1.DeferRefreshHelper.Dispose">
+            <summary>
+            Уменьшить счетчик отложенной посылки обновлений.
+            </summary>
+        </member>
+        <member name="T:WPFExtentions.Properties.Resources">
+            <summary>
+              Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
+            </summary>
+        </member>
+        <member name="P:WPFExtentions.Properties.Resources.ResourceManager">
+            <summary>
+              Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
+            </summary>
+        </member>
+        <member name="P:WPFExtentions.Properties.Resources.Culture">
+            <summary>
+              Перезаписывает свойство CurrentUICulture текущего потока для всех
+              обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
+            </summary>
+        </member>
+        <member name="M:WPFExtentions.RadialProgressIndicator.#cctor">
+            <summary>Static meta data registrations</summary>
+        </member>
+        <member name="M:WPFExtentions.RadialProgressIndicator.#ctor">
+            <summary>Initalizes a new instance of <see cref="T:WPFExtentions.RadialProgressIndicator" /></summary>
+        </member>
+        <member name="F:WPFExtentions.RadialProgressIndicator.ForegroundProperty">
+            <summary>Dependency property for Foreground</summary>
+        </member>
+        <member name="P:WPFExtentions.RadialProgressIndicator.Foreground">
+            <summary>Foreground property</summary>
+        </member>
+        <member name="F:WPFExtentions.RadialProgressIndicator.ActiveForegroundProperty">
+            <summary>Dependency property for ActiveForeground</summary>
+        </member>
+        <member name="P:WPFExtentions.RadialProgressIndicator.ActiveForeground">
+            <summary>
+                ActiveForeground property.
+            </summary>
+        </member>
+        <member name="F:WPFExtentions.RadialProgressIndicator.CurrentValueProperty">
+            <summary>
+                Dependency property for CurrentValue.
+            </summary>
+        </member>
+        <member name="P:WPFExtentions.RadialProgressIndicator.CurrentValue">
+            <summary>Current value property.</summary>
+        </member>
+        <member name="M:WPFExtentions.RadialProgressIndicator.OnRender(System.Windows.Media.DrawingContext)">
+            <summary>
+                When overridden in a derived class, participates in rendering operations
+                that are directed by the layout system. The rendering instructions for this
+                element are not used directly when this method is invoked, and are instead
+                preserved for later asynchronous use by layout and drawing.
+            </summary>
+            <param name="DrawingContext">
+                The drawing instructions for a specific element. This context is provided
+                to the layout system.
+            </param>
+        </member>
+        <member name="M:WPFExtentions.RadialProgressIndicator.OnRenderSizeChanged(System.Windows.SizeChangedInfo)">
+            <summary>
+                Raises the System.Windows.FrameworkElement.SizeChanged event, using the specified
+                information as part of the eventual event data.
+            </summary>
+            <param name="SizeInfo">
+            </param>
+        </member>
+        <member name="M:WPFExtentions.GeometryExtensions.EaseAngle(System.Double)">
+            <summary>
+                Easing in angle by delta proportionally 5 percent towards 360.
+            </summary>
+            <param name="angle">
+                The angle to start.
+            </param>
+            <returns>
+                Increased angle eased in by delta proportionally 5 percent towards 360.
+            </returns>
+        </member>
+        <member name="M:WPFExtentions.GeometryExtensions.Angle(System.Double,System.Double)">
+            <summary>
+                Increases the angle by the delta and ensure the final result is in
+                -360 to 360 degrees.
+            </summary>
+            <param name="angle">
+                The angle in degrees to increase.
+            </param>
+            <param name="delta">
+                The delta angle in degree to increase by.
+            </param>
+            <returns>
+                The angle increased by delta and ensure the final result is in
+                -360 to 360 degrees.
+            </returns>
+        </member>
+        <member name="M:WPFExtentions.GeometryExtensions.Angle(System.Double)">
+            <summary>
+                Converts the percent from 0 to 100 into proportional angle from 0 to 360.
+            </summary>
+            <param name="percent">
+                The percent to convert.
+            </param>
+            <returns>
+                The converted angle from 0 to 360 proportional to 0 to 100 percent.
+            </returns>
+        </member>
+        <member name="M:WPFExtentions.GeometryExtensions.CreatePath(System.Windows.Point,System.Double,System.Double,System.Double)">
+            <summary>
+                Creates a circle path for the specified location, angle in degrees, circle radius and inner radius.
+            </summary>
+            <param name="location">
+                The start location.
+            </param>
+            <param name="angle">
+                The angle in degrees.
+            </param>
+            <param name="radius">
+                The radius.
+            </param>
+            <param name="InnerRadius">
+                Inner radius.
+            </param>
+            <returns>
+                The circle path for the specified location, angle in degrees, circle radius and inner radius.
+            </returns>
+        </member>
+        <member name="M:WPFExtentions.GeometryExtensions.Create(System.Windows.Point,System.Int32,System.Double,System.Double,System.Double)">
+            <summary>
+                Creates a circle path spilits into the given number of sigments.
+            </summary>
+            <param name="point">
+                The start location.
+            </param>
+            <param name="segments">
+                Number of sigments.
+            </param>
+            <param name="margin">
+                Sigment distance between each other in degrees.
+            </param>
+            <param name="radius">
+                The radius.
+            </param>
+            <param name="InnerRadius">
+                The inner radius.
+            </param>
+            <returns>
+                The combined path geomerty of the circle spilits into the number of segments.
+            </returns>
+        </member>
+        <member name="M:WPFExtentions.GeometryExtensions.ConvertRadianToCartesian(System.Double,System.Double)">
+            <summary>
+                Gets the vector point for the specified angle in degrees and radius.
+            </summary>
+            <param name="angle">
+                The angle in degrees.
+            </param>
+            <param name="radius">
+                The radius.
+            </param>
+            <returns>
+                The vector point for the specified angle in degrees and radius.
+            </returns>
+        </member>
+        <member name="M:WPFExtentions.GeometryExtensions.Normalize(System.Double)">
+            <summary>
+                Normalizes the specified angle in degrees to angles between 0 to 360;
+            </summary>
+            <param name="angle">
+                The angle to normalize.
+            </param>
+            <returns>
+                Normalized angle in degrees from 0 to 360 for the specified <paramref name="angle" />
+            </returns>
+        </member>
+        <member name="M:WPFExtentions.GeometryExtensions.EaseIn(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+                Impelement the EaseIn style of exponential animation which is one of exponential growth.
+            </summary>
+            <param name="TimeFraction">
+                Time we've been running from 0 to 1.
+            </param>
+            <param name="start">
+                Start value.
+            </param>
+            <param name="delta">
+                Delta between start value and the end value we want.
+            </param>
+            <param name="power">
+                The rate of exponental growth.
+            </param>
+            <returns>
+                The result value.
+            </returns>
+        </member>
+        <member name="M:WPFExtentions.GeometryExtensions.EaseOut(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+                Impelement the EaseOut style of exponential animation which is one of exponential decay.
+            </summary>
+            <param name="TimeFraction">
+                Time we've been running from 0 to 1.
+            </param>
+            <param name="start">
+                Start value.
+            </param>
+            <param name="delta">
+                Delta between start value and the end value we want.
+            </param>
+            <param name="power">
+                The rate of exponental decay.
+            </param>
+            <returns>
+                The result value.
+            </returns>
+        </member>
+        <member name="M:WPFExtentions.GeometryExtensions.EaseInOut(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+                Impelement the EaseInOut style of exponential animation which is one of exponential growth
+                for the first half of the animation and one of exponential decay for the second half.
+            </summary>
+            <param name="TimeFraction">
+                Time we've been running from 0 to 1.
+            </param>
+            <param name="start">
+                Start value.
+            </param>
+            <param name="delta">
+                Delta between start value and the end value we want.
+            </param>
+            <param name="power">
+                The rate of exponental growth/decay.
+            </param>
+            <returns>
+                The result value.
+            </returns>
+        </member>
+        <member name="M:WPFExtentions.DoubleUtil.AreClose(System.Double,System.Double)">
+            <summary>
+                AreClose - Returns whether or not two doubles are "close".  That is, whether or
+                not they are within epsilon of each other.  Note that this epsilon is proportional
+                to the numbers themselves to that AreClose survives scalar multiplication.
+                There are plenty of ways for this to return false even for numbers which
+                are theoretically identical, so no code calling this should fail to work if this
+                returns false.  This is important enough to repeat:
+                NB: NO CODE CALLING THIS FUNCTION SHOULD DEPEND ON ACCURATE RESULTS - this should be
+                used for optimizations *only*.
+            </summary>
+            <returns>
+                bool - the result of the AreClose comparision.
+            </returns>
+            <param name="value1"> The first double to compare. </param>
+            <param name="value2"> The second double to compare. </param>
+        </member>
+        <member name="M:WPFExtentions.DoubleUtil.AreClose(System.Windows.Size,System.Windows.Size)">
+            <summary>
+                Compares two Size instances for fuzzy equality.  This function
+                helps compensate for the fact that double values can
+                acquire error when operated upon
+            </summary>
+            <param name='size1'>The first size to compare</param>
+            <param name='size2'>The second size to compare</param>
+            <returns>Whether or not the two Size instances are equal</returns>
+        </member>
+        <member name="M:WPFExtentions.DoubleUtil.AreClose(System.Windows.Point,System.Windows.Point)">
+            <summary>
+                Compares two points for fuzzy equality.  This function
+                helps compensate for the fact that double values can
+                acquire error when operated upon
+            </summary>
+            <param name='point1'>The first point to compare</param>
+            <param name='point2'>The second point to compare</param>
+            <returns>Whether or not the two points are equal</returns>
+        </member>
+        <member name="M:WPFExtentions.DoubleUtil.AreClose(System.Windows.Vector,System.Windows.Vector)">
+            <summary>
+                Compares two Vector instances for fuzzy equality.  This function
+                helps compensate for the fact that double values can
+                acquire error when operated upon
+            </summary>
+            <param name='vector1'>The first Vector to compare</param>
+            <param name='vector2'>The second Vector to compare</param>
+            <returns>Whether or not the two Vector instances are equal</returns>
+        </member>
+        <member name="M:WPFExtentions.DoubleUtil.LessThan(System.Double,System.Double)">
+            <summary>
+                LessThan - Returns whether or not the first double is less than the second double.
+                That is, whether or not the first is strictly less than *and* not within epsilon of
+                the other number.  Note that this epsilon is proportional to the numbers themselves
+                to that AreClose survives scalar multiplication.  Note,
+                There are plenty of ways for this to return false even for numbers which
+                are theoretically identical, so no code calling this should fail to work if this
+                returns false.  This is important enough to repeat:
+                NB: NO CODE CALLING THIS FUNCTION SHOULD DEPEND ON ACCURATE RESULTS - this should be
+                used for optimizations *only*.
+            </summary>
+            <returns>
+                bool - the result of the LessThan comparision.
+            </returns>
+            <param name="value1"> The first double to compare. </param>
+            <param name="value2"> The second double to compare. </param>
+        </member>
+        <member name="M:WPFExtentions.DoubleUtil.GreaterThan(System.Double,System.Double)">
+            <summary>
+                GreaterThan - Returns whether or not the first double is greater than the second double.
+                That is, whether or not the first is strictly greater than *and* not within epsilon of
+                the other number.  Note that this epsilon is proportional to the numbers themselves
+                to that AreClose survives scalar multiplication.  Note,
+                There are plenty of ways for this to return false even for numbers which
+                are theoretically identical, so no code calling this should fail to work if this
+                returns false.  This is important enough to repeat:
+                NB: NO CODE CALLING THIS FUNCTION SHOULD DEPEND ON ACCURATE RESULTS - this should be
+                used for optimizations *only*.
+            </summary>
+            <returns>
+                bool - the result of the GreaterThan comparision.
+            </returns>
+            <param name="value1"> The first double to compare. </param>
+            <param name="value2"> The second double to compare. </param>
+        </member>
+        <member name="M:WPFExtentions.DoubleUtil.LessThanOrClose(System.Double,System.Double)">
+            <summary>
+                LessThanOrClose - Returns whether or not the first double is less than or close to
+                the second double.  That is, whether or not the first is strictly less than or within
+                epsilon of the other number.  Note that this epsilon is proportional to the numbers
+                themselves to that AreClose survives scalar multiplication.  Note,
+                There are plenty of ways for this to return false even for numbers which
+                are theoretically identical, so no code calling this should fail to work if this
+                returns false.  This is important enough to repeat:
+                NB: NO CODE CALLING THIS FUNCTION SHOULD DEPEND ON ACCURATE RESULTS - this should be
+                used for optimizations *only*.
+            </summary>
+            <returns>
+                bool - the result of the LessThanOrClose comparision.
+            </returns>
+            <param name="value1"> The first double to compare. </param>
+            <param name="value2"> The second double to compare. </param>
+        </member>
+        <member name="M:WPFExtentions.DoubleUtil.GreaterThanOrClose(System.Double,System.Double)">
+            <summary>
+                GreaterThanOrClose - Returns whether or not the first double is greater than or close to
+                the second double.  That is, whether or not the first is strictly greater than or within
+                epsilon of the other number.  Note that this epsilon is proportional to the numbers
+                themselves to that AreClose survives scalar multiplication.  Note,
+                There are plenty of ways for this to return false even for numbers which
+                are theoretically identical, so no code calling this should fail to work if this
+                returns false.  This is important enough to repeat:
+                NB: NO CODE CALLING THIS FUNCTION SHOULD DEPEND ON ACCURATE RESULTS - this should be
+                used for optimizations *only*.
+            </summary>
+            <returns>
+                bool - the result of the GreaterThanOrClose comparision.
+            </returns>
+            <param name="value1"> The first double to compare. </param>
+            <param name="value2"> The second double to compare. </param>
+        </member>
+        <member name="M:WPFExtentions.DoubleUtil.IsOne(System.Double)">
+            <summary>
+                IsOne - Returns whether or not the double is "close" to 1.  Same as AreClose(double, 1),
+                but this is faster.
+            </summary>
+            <returns>
+                bool - the result of the AreClose comparision.
+            </returns>
+            <param name="value"> The double to compare to 1. </param>
+        </member>
+        <member name="M:WPFExtentions.DoubleUtil.IsZero(System.Double)">
+            <summary>
+                IsZero - Returns whether or not the double is "close" to 0.  Same as AreClose(double, 0),
+                but this is faster.
+            </summary>
+            <returns>
+                bool - the result of the AreClose comparision.
+            </returns>
+            <param name="value"> The double to compare to 0. </param>
+        </member>
+        <member name="M:WPFExtentions.DoubleUtil.IsFinite(System.Double)">
+            <summary>
+                Test to see if a double is a finite number (is not NaN or Infinity).
+            </summary>
+            <param name='value'>
+                The value to test.
+            </param>
+            <returns>
+                Whether or not the value is a finite number.
+            </returns>
+        </member>
+        <member name="M:WPFExtentions.DoubleUtil.IsValidSize(System.Double)">
+            <summary>
+                Test to see if a double a valid size value (is finite and > 0).
+            </summary>
+            <param name='value'>
+                The value to test.
+            </param>
+            <returns>
+                Whether or not the value is a valid size value.
+            </returns>
+        </member>
+        <member name="M:WPFExtentions.DoubleUtil.IsNaN(System.Double)">
+            <summary>
+                Checks whether the double value is not a valid number or not. The standard CLR double.IsNaN()
+                function is approximately 100 times slower than this, so please make sure to use DoubleUtil.IsNaN()
+                in performance sensitive code.
+            </summary>
+            <param name="value">
+                The double value to check for.
+            </param>
+            <returns>
+                True if <paramref name="value" /> is not a number. Otherwise true.
+            </returns>
+        </member>
+        <member name="T:WPFExtentions.CustomSynchronizationContext">
+            <summary></summary>
+            <example>
+            static void Main(string[] args)
+            {
+               var syncContext = new CustomSynchronizationContext();
+               try
+               {
+                  syncContext.Send(o => { throw new Exception("TestException"); }, null);
+               } catch(Exception ex)
+               {
+                   Console.WriteLine(ex.Message);
+               }
+            }
+            -----
+            static void Main(string[] args)
+            {
+                var syncContext = new CustomSynchronizationContext();
+                syncContext.Post(TestAsyncMethod, null);
+            }
+            
+            async static void TestAsyncMethod(object obj)
+            {
+                Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
+                await Task.Run(() => Console.WriteLine(Thread.CurrentThread.ManagedThreadId));
+                Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
+            }
+            </example>
+        </member>
+        <member name="T:WPFExtentions.Temp.BarnsleyFern">
+            <summary>
+            http://en.wikipedia.org/wiki/Barnsley_fern
+            </summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.AccentedAtom">
+            <summary>Atom representing base atom with accent above it</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.AccentedAtom.BaseAtom">
+            <summary>Atom over which accent symbol is placed</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.AccentedAtom.AccentAtom">
+            <summary>Atom representing accent symbol to place over base atom</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.Atom">
+            <summary>Atom (smallest unit) of TexFormula</summary>
+        </member>
+        <member name="M:WPFExtentions.TeX.Atom.GetLeftType">
+            <summary>Gets type of leftmost child item</summary>
+            <returns></returns>
+        </member>
+        <member name="M:WPFExtentions.TeX.Atom.GetRightType">
+            <summary>Gets type of leftmost child item</summary>
+            <returns></returns>
+        </member>
+        <member name="T:WPFExtentions.TeX.BigOperatorAtom">
+            <summary>Atom representing big operator with optional limits</summary>
+        </member>
+        <member name="M:WPFExtentions.TeX.BigOperatorAtom.ChangeWidth(WPFExtentions.TeX.Box,System.Double)">
+            <summary>Centre specified box in new box of specified width, if necessary</summary>
+            <param name="box"></param>
+            <param name="maxWidth"></param>
+            <returns></returns>
+        </member>
+        <member name="P:WPFExtentions.TeX.BigOperatorAtom.BaseAtom">
+            <summary>Atom representing big operator</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.BigOperatorAtom.LowerLimitAtom">
+            <summary>Atoms representing lower and upper limits</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.BigOperatorAtom.UseVerticalLimits">
+            <summary>True if limits should be drawn over and under the base atom; false if they should be drawn as scripts</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.CharAtom">
+            <summary>Atom representing single character in specific text style</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.CharAtom.TextStyle">
+            <summary>Null means default text style</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.CharFont">
+            <summary>Single character together with specific font</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.CharInfo">
+            <summary>Single character togeter with information about font and metrics</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.DefaultTexFont">
+            <summary>Default implementation of ITeXFont that reads all font information from XML file</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.DefaultTexFontParser">
+            <summary>Parses information for DefaultTeXFont settings from XML file</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.DummyAtom">
+            <summary>Dummy atom representing atom whose type can change or which can be replaced by a ligature</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.FencedAtom">
+            <summary>Atom representing base atom surrounded by delimeters</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.FixedCharAtom">
+            <summary>Atom representing character that does not depend on text style</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.FractionAtom">
+            <summary>Atom representing fraction, with or without separation line</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.Glue">
+            <summary>Represents glueElement for holding together boxes</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.HorizontalBox">
+            <summary>Box containing horizontal stack of child boxes</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.OverBar">
+            <summary>Box representing other box with horizontal rule above it</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.OverlinedAtom">
+            <summary>Atom representing other atom with horizontal rule above it</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.OverUnderBox">
+            <summary>Box representing other box with delimeter and script box over or under it</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.OverUnderBox.Kern">
+            <summary>Kern between delimeter and Script</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.OverUnderBox.Over">
+            <summary>True to draw delimeter and script over base; false to draw under base</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.OverUnderDelimiter.Kern">
+            <summary>Kern between delimeter symbol and script</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.OverUnderDelimiter.Over">
+            <summary> True to place delimeter symbol Over base; false to place delimeter symbol under base</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.PhantomAtom">
+            <summary>Atom representing other atom that is not rendered</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.TexPredefinedFormulaSettingsParser">
+            <summary>Parses settings for predefined formulas from XML file</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.Radical">
+            <summary>Atom representing radical (nth-root) construction</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.ScriptsAtom">
+            <summary>Atom representing scripts to attach to other atom</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.StyledAtom">
+            <summary>Atom specifying graphical style</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.StyledAtom.RowAtom">
+            <summary>RowAtom to which colors are applied</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.SymbolAtom">
+            <summary>Atom representing symbol (non-alphanumeric character)</summary>
+        </member>
+        <member name="F:WPFExtentions.TeX.SymbolAtom.symbols">
+            <summary>Dictionary of definitions of all symbols, keyed by name</summary>
+        </member>
+        <member name="F:WPFExtentions.TeX.SymbolAtom.validSymbolTypes">
+            <summary>Set of all valid symbol types</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.TexEnvironment">
+            <summary>Specifies current graphical parameters used to create boxes</summary>
+        </member>
+        <member name="F:WPFExtentions.TeX.TexEnvironment.lastFontId">
+            <summary>ID of font that was last used</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.TexFontInfo">
+            <summary>Specifies all information about single font</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.TexFontInfo.SkewCharacter">
+            <summary>Skew character (used for positioning accents)</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.TexFontMetrics">
+            <summary>Specifies font metrics for single character</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.TexFormula">
+            <summary>Represents mathematical formula that can be rendered</summary>
+        </member>
+        <member name="F:WPFExtentions.TeX.TexFormulaParser.isInitialized">
+            <summary>True if parser has been initialized</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.TypedAtom">
+            <summary>Atom representing other atom with custom left and right types</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.UnderlinedAtom">
+            <summary>Atom representing other atom that is underlined</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.UnderOverAtom">
+            <summary>Atom representing other atom with atoms optionally over and under it</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.VerticalBox">
+            <summary>Box containing vertical stack of child boxes</summary>
+        </member>
+        <member name="T:WPFExtentions.TeX.VerticalCenteredAtom">
+            <summary>Atom representing other atom vertically centered with respect to axis</summary>
+        </member>
+        <member name="F:WPFExtentions.TeX.MathView.ScaleProperty">
+            <summary>Маштаб</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.MathView.Scale">
+            <summary>Маштаб</summary>
+        </member>
+        <member name="F:WPFExtentions.TeX.MathView.ForegroundProperty">
+            <summary>Кисть отрисовки текста формулы</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.MathView.Foreground">
+            <summary>Кисть отрисовки текста формулы</summary>
+        </member>
+        <member name="F:WPFExtentions.TeX.MathView.BackgroundProperty">
+            <summary>Кисть отрисовки заднего фона</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.MathView.Background">
+            <summary>Кисть отрисовки заднего фона</summary>
+        </member>
+        <member name="F:WPFExtentions.TeX.MathView.DataProperty">
+            <summary>Строковое выражение</summary>
+        </member>
+        <member name="P:WPFExtentions.TeX.MathView.Data">
+            <summary>Строковое выражение</summary>
+        </member>
+        <member name="F:WPFExtentions.ViewModels.ViewModel.f_PropertiesDependencesDictionary">
+            <summary>Словарь графа зависимости изменений свйоств</summary>
+        </member>
+        <member name="M:WPFExtentions.ViewModels.ViewModel.PropertyDependence_Add(System.String,System.String[])">
+            <summary>Добавить зависимости между свйоствами</summary>
+            <param name="PropertyName">Имя исходного свйоства</param>
+            <param name="Dependences">Перечисление свйоств, на которые исходное свойство имеет влияние</param>
+        </member>
+        <member name="M:WPFExtentions.ViewModels.ViewModel.PropertyDependences_Remove(System.String,System.String)">
+            <summary>Удаление зависимости между свйоствами</summary>
+            <param name="PropertyName">Исходное свойство</param>
+            <param name="Dependence">Свйоство, связь с которым надо разорвать</param>
+            <returns>Истина, если связь успено удалена, ложь - если связь отсутствовала</returns>
+        </member>
+        <member name="M:WPFExtentions.ViewModels.ViewModel.PropertyDependences_Clear(System.String)">
+            <summary>Очистить граф зависимостей между свйоствами для указанного свйоства</summary>
+            <param name="PropertyName">Название свйоства, связи которого нао удалить</param>
+        </member>
+        <member name="M:WPFExtentions.ViewModels.ViewModel.OnPropertyChanged(System.String)">
+            <summary>Метод генерации события изменения значения свойства</summary>
+            <param name="PropertyName">Имя изменившегося свойства</param>
+        </member>
+        <member name="M:WPFExtentions.ViewModels.ViewModel.SetPropertyValue``1(``0@,``0,System.Func{``0,System.Boolean},System.String)">
+            <summary>Метод установки значения свйоства, осуществляющий генерацию события изменения свйоства</summary>
+            <typeparam name="T">Тип знначения свйоства</typeparam>
+            <param name="field">Ссылка на поле, хранящее значение свйоства</param>
+            <param name="value">Значение свйоства, которое надо установить</param>
+            <param name="ValueChecker">Метод проверки соответствия значения области допустимых значений свойства</param>
+            <param name="PropertyName">Имя свойства</param>
+            <returns>Истина, если значение свйоства установлено успешно</returns>
+        </member>
+        <member name="M:WPFExtentions.ViewModels.ViewModel.SetPropertyValue``1(``0@,``0,System.String)">
+            <summary>Метод установки значения свйоства, осуществляющий генерацию события изменения свйоства</summary>
+            <typeparam name="T">Тип знначения свйоства</typeparam>
+            <param name="field">Ссылка на поле, хранящее значение свйоства</param>
+            <param name="value">Значение свйоства, которое надо установить</param>
+            <param name="PropertyName">Имя свойства</param>
+            <returns>Истина, если значение свйоства установлено успешно</returns>
+        </member>
+        <member name="F:WPFExtentions.ViewModels.ViewModel.sf_IsDesignMode">
+            <summary>Признак того, что мы находимся в режиме разработки под Visual Studio</summary>
+        </member>
+        <member name="P:WPFExtentions.ViewModels.ViewModel.IsDesignMode">
+            <summary>Признак того, что мы находимся в режиме разработки под Visual Studio</summary>
+        </member>
+        <member name="T:WPFExtentions.Watermark">
+            <summary>Водяной знак для поля ввода</summary>
+        </member>
+        <member name="F:WPFExtentions.Watermark.OpacityProperty">
+            <summary>Прозпачность возяного знака</summary>
+        </member>
+        <member name="M:WPFExtentions.Watermark.SetOpacity(System.Windows.DependencyObject,System.Double)">
+            <summary>Задать прозрачность возяного знака</summary>
+            <param name="element">Объект, которому устанавливается прозрачность водяного знака</param>
+            <param name="value">Значение прозрачности водяного знака</param>
+        </member>
+        <member name="M:WPFExtentions.Watermark.GetOpacity(System.Windows.DependencyObject)">
+            <summary>Получить значение прозрачности водяного знака</summary>
+            <param name="element">Элемент, прозрачность водяного знака которого надо получить</param>
+            <returns>Значение прозрачности водяного знака</returns>
+        </member>
+        <member name="F:WPFExtentions.Watermark.ValueProperty">
+            <summary>Значение водяного знака</summary>
+        </member>
+        <member name="M:WPFExtentions.Watermark.SetValue(System.Windows.DependencyObject,System.Object)">
+            <summary>Задать значение водяного знака</summary>
+            <param name="element">Элемент, которому задаётся значение водяного знака</param>
+            <param name="value">Значение водяного знака</param>
+        </member>
+        <member name="M:WPFExtentions.Watermark.GetValue(System.Windows.DependencyObject)">
+            <summary>Получить значение водяного знака</summary>
+            <param name="element">Элемент, значение водяного знака которого надо получить</param>
+            <returns>Значение водяного знака</returns>
+        </member>
+        <member name="F:WPFExtentions.Watermark.VerticalAlignmentProperty">
+            <summary>Прилогаемое свойство <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.VerticalAlignmentProperty"/> типа <see cref="T:System.Windows.VerticalAlignment"/></summary>
+        </member>
+        <member name="M:WPFExtentions.Watermark.SetVerticalAligment(System.Windows.DependencyObject,System.Windows.VerticalAlignment)">
+            <summary>Установка значения <see cref="!:value"/> типа <see cref="T:System.Windows.VerticalAlignment"/> свйоству <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.VerticalAlignmentProperty"/> целевого объекта <see cref="!:element"/></summary>
+            <param name="element">Объект <see cref="T:System.Windows.DependencyObject"/>, значение <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.VerticalAlignmentProperty"/> которого надо установить</param>
+            <param name="value">Устанавливаемое значение <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.VerticalAlignmentProperty"/> типа <see cref="T:System.Windows.VerticalAlignment"/></param>
+        </member>
+        <member name="M:WPFExtentions.Watermark.GetVerticalAligment(System.Windows.DependencyObject)">
+            <summary>Получение значения типа <see cref="T:System.Windows.VerticalAlignment"/> свойства <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.VerticalAlignmentProperty"/> у целевого объекта <see cref="!:element"/></summary>
+            <param name="element">Объект <see cref="T:System.Windows.DependencyObject"/>, значение <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.VerticalAlignmentProperty"/> которого надо получить</param>
+            <returns>Значение свйоства <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.VerticalAlignmentProperty"/> типа <see cref="T:System.Windows.VerticalAlignment"/> целевого объекта <see cref="!:element"/></returns>
+        </member>
+        <member name="F:WPFExtentions.Watermark.HorizontalAlignmentProperty">
+            <summary>Прилогаемое свойство <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.HorizontalAlignmentProperty"/> типа <see cref="T:System.Windows.HorizontalAlignment"/></summary>
+        </member>
+        <member name="M:WPFExtentions.Watermark.SetHorizontalAlignment(System.Windows.DependencyObject,System.Windows.HorizontalAlignment)">
+            <summary>Установка значения <see cref="!:value"/> типа <see cref="T:System.Windows.HorizontalAlignment"/> свйоству <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.HorizontalAlignmentProperty"/> целевого объекта <see cref="!:element"/></summary>
+            <param name="element">Объект <see cref="T:System.Windows.DependencyObject"/>, значение <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.HorizontalAlignmentProperty"/> которого надо установить</param>
+            <param name="value">Устанавливаемое значение <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.HorizontalAlignmentProperty"/> типа <see cref="T:System.Windows.HorizontalAlignment"/></param>
+        </member>
+        <member name="M:WPFExtentions.Watermark.GetHorizontalAlignment(System.Windows.DependencyObject)">
+            <summary>Получение значения типа <see cref="T:System.Windows.HorizontalAlignment"/> свойства <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.HorizontalAlignmentProperty"/> у целевого объекта <see cref="!:element"/></summary>
+            <param name="element">Объект <see cref="T:System.Windows.DependencyObject"/>, значение <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.HorizontalAlignmentProperty"/> которого надо получить</param>
+            <returns>Значение свйоства <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.HorizontalAlignmentProperty"/> типа <see cref="T:System.Windows.HorizontalAlignment"/> целевого объекта <see cref="!:element"/></returns>
+        </member>
+        <member name="F:WPFExtentions.Watermark.FontSizeProperty">
+            <summary>Прилогаемое свойство <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.FontSizeProperty"/> типа <see cref="T:System.Double"/></summary>
+        </member>
+        <member name="M:WPFExtentions.Watermark.SetFontSize(System.Windows.DependencyObject,System.Double)">
+            <summary>Установка значения <see cref="!:value"/> типа <see cref="T:System.Double"/> свйоству <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.FontSizeProperty"/> целевого объекта <see cref="!:element"/></summary>
+            <param name="element">Объект <see cref="T:System.Windows.DependencyObject"/>, значение <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.FontSizeProperty"/> которого надо установить</param>
+            <param name="value">Устанавливаемое значение <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.FontSizeProperty"/> типа <see cref="T:System.Double"/></param>
+        </member>
+        <member name="M:WPFExtentions.Watermark.GetFontSize(System.Windows.DependencyObject)">
+            <summary>Получение значения типа <see cref="T:System.Double"/> свойства <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.FontSizeProperty"/> у целевого объекта <see cref="!:element"/></summary>
+            <param name="element">Объект <see cref="T:System.Windows.DependencyObject"/>, значение <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.FontSizeProperty"/> которого надо получить</param>
+            <returns>Значение свйоства <see cref="T:WPFExtentions.Watermark"/>.<see cref="F:WPFExtentions.Watermark.FontSizeProperty"/> типа <see cref="T:System.Double"/> целевого объекта <see cref="!:element"/></returns>
+        </member>
+        <member name="F:WPFExtentions.Watermark.sf_ItemsControlsDictionary">
+            <summary>Словарь объектов ItemsControls, которым установлен водяной знак</summary>
+        </member>
+        <member name="M:WPFExtentions.Watermark.OnWatermarkOpacityChanged(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>Обработчик события изменения водяного знака</summary>
+            <param name="d"><see cref="T:System.Windows.DependencyObject"/> - источник события</param>
+            <param name="e"><see cref="T:System.Windows.DependencyPropertyChangedEventArgs"/> - аргумент события изменения водяного знака</param>
+        </member>
+        <member name="M:WPFExtentions.Watermark.OnWatermarkPropertyAttached(System.Windows.DependencyObject,System.Windows.DependencyPropertyChangedEventArgs)">
+            <summary>Обработчик события изменения водяного знака</summary>
+            <param name="d"><see cref="T:System.Windows.DependencyObject"/> - источник события</param>
+            <param name="e"><see cref="T:System.Windows.DependencyPropertyChangedEventArgs"/> - аргумент события изменения водяного знака</param>
+        </member>
+        <member name="M:WPFExtentions.Watermark.OnContentChanged(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>Обработчик события изменения фокуса ввода элемента</summary>
+            <param name="sender">Объект - источник событий</param>
+            <param name="e"><see cref="T:System.Windows.Controls.Primitives.ItemsChangedEventArgs"/> - аргумент события</param>
+        </member>
+        <member name="M:WPFExtentions.Watermark.OnGotKeyboardFocus(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>Обработчик события изменения фокуса ввода клавиатуры</summary>
+            <param name="sender">Объект - источник событий</param>
+            <param name="e"><see cref="T:System.Windows.RoutedEventArgs"/> - аргумент события</param>
+        </member>
+        <member name="M:WPFExtentions.Watermark.OnLoaded(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>Обработчик события загрузки компонента</summary>
+            <param name="sender">Источник события</param>
+            <param name="e"><see cref="T:System.Windows.RoutedEventArgs"/> - аргумент события</param>
+        </member>
+        <member name="M:WPFExtentions.Watermark.OnItemsSourceChanged(System.Object,System.EventArgs)">
+            <summary>Обработчик события изменения значения свойства Источника элементов</summary>
+            <param name="sender">Источник события</param>
+            <param name="e">A <see cref="T:System.EventArgs"/> - аргумент события</param>
+        </member>
+        <member name="M:WPFExtentions.Watermark.OnItemsChanged(System.Object,System.Windows.Controls.Primitives.ItemsChangedEventArgs)">
+            <summary>Обработчик события изменения элементов объекта</summary>
+            <param name="sender">Источник события</param>
+            <param name="e"><see cref="T:System.Windows.Controls.Primitives.ItemsChangedEventArgs"/> - аргумент события</param>
+        </member>
+        <member name="M:WPFExtentions.Watermark.RemoveWatermark(System.Windows.UIElement)">
+            <summary>Уделить водяной знак элемента</summary>
+            <param name="control">Элемент, водяной знак у которого надо удалить</param>
+        </member>
+        <member name="M:WPFExtentions.Watermark.ShowWatermark(System.Windows.Controls.Control)">
+            <summary>Показать водяной знак для компонента</summary>
+            <param name="control">Компонент, для которого надо показать водяной знак</param>
+        </member>
+        <member name="M:WPFExtentions.Watermark.ShouldShowWatermark(System.Windows.Controls.Control)">
+            <summary>Проверка необходимости показать водяной знак компонента</summary>
+            <param name="c"><see cref="T:System.Windows.Controls.Control"/> - компонент, для которого надо проверить видимость</param>
+            <returns>Истина, если компонент удовлетворяет условию отображения водяного знака</returns>
+        </member>
+        <member name="T:WPFExtentions.Watermark.WatermarkAdorner">
+            <summary>Слой водяного знака</summary>
+        </member>
+        <member name="F:WPFExtentions.Watermark.WatermarkAdorner.f_ContentPresenter">
+            <summary><see cref="T:System.Windows.Controls.ContentPresenter"/> - объект, содержащий водяной знак</summary>
+        </member>
+        <member name="M:WPFExtentions.Watermark.WatermarkAdorner.#ctor(System.Windows.UIElement,System.Object)">
+            <summary>Инициализация нового <see cref="T:WPFExtentions.Watermark.WatermarkAdorner"/></summary>
+            <param name="control"><see cref="T:System.Windows.UIElement"/> - компонент, которому назначается водяной знак</param>
+            <param name="watermark">Значение водяного знака</param>
+        </member>
+        <member name="P:WPFExtentions.Watermark.WatermarkAdorner.VisualChildrenCount">
+            <summary>Число дочерних слоёв <see cref="T:System.Windows.Media.ContainerVisual"/></summary>
+        </member>
+        <member name="P:WPFExtentions.Watermark.WatermarkAdorner.Control">
+            <summary>Космонент, который надо отобразить</summary>
+        </member>
+        <member name="M:WPFExtentions.Watermark.WatermarkAdorner.GetVisualChild(System.Int32)">
+            <summary>
+            Возвращает специальный тип дочернего <see cref="T:System.Windows.Media.Visual"/> для родительского <see cref="T:System.Windows.Media.ContainerVisual"/>.
+            </summary>
+            <param name="index">Индекс дочернего <see cref="T:System.Windows.Media.Visual"/>. Значение индекса должно быть между 0 и <see cref="P:WPFExtentions.Watermark.WatermarkAdorner.VisualChildrenCount"/> - 1</param>
+            <returns>Дочерний <see cref="T:System.Windows.Media.Visual"/></returns>
+        </member>
+        <member name="M:WPFExtentions.Watermark.WatermarkAdorner.MeasureOverride(System.Windows.Size)">
+            <summary> Реализует любое ручное поведение процесса измерения слоя</summary>
+            <param name="constraint">Необходимый размер</param>
+            <returns><see cref="T:System.Windows.Size"/> - размер нужного для отображения слоя</returns>
+        </member>
+        <member name="M:WPFExtentions.Watermark.WatermarkAdorner.ArrangeOverride(System.Windows.Size)">
+            <summary>
+            При переопределении в производном классе размещает дочерние элементы и определяет размер для класса, производного от <see cref="T:System.Windows.FrameworkElement"/>. 
+            </summary>
+            <returns>Реальный используемый размер</returns>
+            <param name="finalSize">Итоговая область в родительском элементе, которую этот элемент должен использовать для собственного размещения и размещения своих дочерних элементов.</param>
+        </member>
+        <member name="T:System.Windows.FrameworkElementExtentions">
+            <summary>Класс методов-расширений для класса FrameworkElement</summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgAElement">
+            <summary>
+              Represents an &lt;a&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgBaseElement">
+            <summary>
+              Base class for all other SVG elements.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgCircleElement">
+            <summary>
+              Represents an &lt;circle&gt; element.
+            </summary>
+        </member>
+        <member name="F:Svg2Xaml.SvgCircleElement.CenterX">
+            <summary>
+              The x-coordinate of the circle's center.
+            </summary>
+        </member>
+        <member name="F:Svg2Xaml.SvgCircleElement.CenterY">
+            <summary>
+              The y-coordinate of the circle's center.
+            </summary>
+        </member>
+        <member name="F:Svg2Xaml.SvgCircleElement.Radius">
+            <summary>
+              The circle's radius.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgClipPathElement">
+            <summary>
+              Represents a &lt;clipPath&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgColor">
+            <summary>
+              Represents an RGB color.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgColorPaint">
+            <summary>
+              A paint with a solid color.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgContainerBaseElement">
+            <summary>
+              Base element for all container elements.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgCoordinate">
+            <summary>
+              A coordinate.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgDefsElement">
+            <summary>
+              Represents a &lt;defs&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgEllipseElement">
+            <summary>
+              Represents an &lt;ellipse&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgFEBlendElement">
+            <summary>
+              Represents an &lt;feBlend&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgFEColorMatrixElement">
+            <summary>
+              Represents an &lt;feColorMatrix&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgFEGaussianBlurElement">
+            <summary>
+              Represents an &lt;feGaussianBlur&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgFilterEffectBaseElement">
+            <summary>
+              Represents a &lt;filterEffect&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgFilterElement">
+            <summary>
+              Represents a &lt;filter&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgFlowParaElement">
+            <summary>
+              Represents a &lt;flowPara&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgFlowRegionElement">
+            <summary>
+              Represents a &lt;flowRegíon&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgFlowRootElement">
+            <summary>
+              Represents a &lt;flowRoot&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgFlowSpanElement">
+            <summary>
+              Represents a &lt;flowSpan&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgForeignObjectElement">
+            <summary>
+              Represents a &lt;foreignObject&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgGElement">
+            <summary>
+              Represents a &lt;g&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgImageElement">
+            <summary>
+              Represents an &lt;image&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgImageExtension">
+            <summary>
+              A <see cref="T:System.Windows.Markup.MarkupExtension"/> for loading SVG images.
+            </summary>
+        </member>
+        <member name="M:Svg2Xaml.SvgImageExtension.#ctor">
+            <summary>
+              Initializes a new <see cref="T:Svg2Xaml.SvgImageExtension"/> instance.
+            </summary>
+        </member>
+        <member name="M:Svg2Xaml.SvgImageExtension.#ctor(System.Uri)">
+            <summary>
+              Initializes a new <see cref="T:Svg2Xaml.SvgImageExtension"/> instance.
+            </summary>
+            <param name="uri">
+              The location of the SVG document.
+            </param>
+        </member>
+        <member name="M:Svg2Xaml.SvgImageExtension.ProvideValue(System.IServiceProvider)">
+            <summary>
+              Overrides <see cref="M:System.Windows.Markup.MarkupExtension.ProvideValue(System.IServiceProvider)"/> and returns the 
+              <see cref="T:System.Windows.Media.DrawingImage"/> the SVG document is rendered into.
+            </summary>
+            <param name="serviceProvider">
+              Object that can provide services for the markup extension; 
+              <paramref name="serviceProvider"/> is not used.
+            </param>
+            <returns>
+              The <see cref="T:System.Windows.Media.DrawingImage"/> the SVG image is rendered into or 
+              <c>null</c> in case there has been an error while parsing or 
+              rendering.
+            </returns>
+        </member>
+        <member name="P:Svg2Xaml.SvgImageExtension.Uri">
+            <summary>
+              Gets or sets the location of the SVG image.
+            </summary>
+        </member>
+        <member name="P:Svg2Xaml.SvgImageExtension.IgnoreEffects">
+            <summary>
+              Gets or sets whether SVG filter effects should be transformed into
+              WPF bitmap effects.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgLinearGradientElement">
+            <summary>
+              Represents a &lt;linearGradient&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgLineElement">
+            <summary>
+              Represents a &lt;line&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgMarkerElement">
+            <summary>
+              Represents a &lt;marker&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgMaskElement">
+            <summary>
+              Represents a &lt;mask&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgMetadataElement">
+            <summary>
+              Represents a &lt;metadata&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgPathElement">
+            <summary>
+              Represents a &lt;path&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgPatternElement">
+            <summary>
+              Represents a &lt;pattern&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgReader">
+            <summary>
+              Provides methods to read (and render) SVG documents.
+            </summary>
+        </member>
+        <member name="M:Svg2Xaml.SvgReader.Load(System.Xml.XmlReader,Svg2Xaml.SvgReaderOptions)">
+            <summary>
+              Loads an SVG document and renders it into a 
+              <see cref="T:System.Windows.Media.DrawingImage"/>.
+            </summary>
+            <param name="reader">
+              A <see cref="T:System.Xml.XmlReader"/> to read the XML structure of the SVG 
+              document.
+            </param>
+            <param name="options">
+              <see cref="T:Svg2Xaml.SvgReaderOptions"/> to use for parsing respectively 
+              rendering the SVG document.
+            </param>
+            <returns>
+              A <see cref="T:System.Windows.Media.DrawingImage"/> containing the rendered SVG document.
+            </returns>
+        </member>
+        <member name="M:Svg2Xaml.SvgReader.Load(System.Xml.XmlReader)">
+            <summary>
+              Loads an SVG document and renders it into a 
+              <see cref="T:System.Windows.Media.DrawingImage"/>.
+            </summary>
+            <param name="reader">
+              A <see cref="T:System.Xml.XmlReader"/> to read the XML structure of the SVG 
+              document.
+            </param>
+            <returns>
+              A <see cref="T:System.Windows.Media.DrawingImage"/> containing the rendered SVG document.
+            </returns>
+        </member>
+        <member name="M:Svg2Xaml.SvgReader.Load(System.IO.Stream,Svg2Xaml.SvgReaderOptions)">
+            <summary>
+              Loads an SVG document and renders it into a 
+              <see cref="T:System.Windows.Media.DrawingImage"/>.
+            </summary>
+            <param name="stream">
+              A <see cref="T:System.IO.Stream"/> to read the XML structure of the SVG 
+              document.
+            </param>
+            <param name="options">
+              <see cref="T:Svg2Xaml.SvgReaderOptions"/> to use for parsing respectively 
+              rendering the SVG document.
+            </param>
+            <returns>
+              A <see cref="T:System.Windows.Media.DrawingImage"/> containing the rendered SVG document.
+            </returns>
+        </member>
+        <member name="M:Svg2Xaml.SvgReader.Load(System.IO.Stream)">
+            <summary>
+              Loads an SVG document and renders it into a 
+              <see cref="T:System.Windows.Media.DrawingImage"/>.
+            </summary>
+            <param name="stream">
+              A <see cref="T:System.IO.Stream"/> to read the XML structure of the SVG 
+              document.
+            </param>
+            <returns>
+              A <see cref="T:System.Windows.Media.DrawingImage"/> containing the rendered SVG document.
+            </returns>
+        </member>
+        <member name="T:Svg2Xaml.SvgReaderOptions">
+            <summary>
+              Defines a set of options to customize rendering repspectively reading 
+              of SVG documents.
+            </summary>
+        </member>
+        <member name="M:Svg2Xaml.SvgReaderOptions.#ctor">
+            <summary>
+              Initializes a new <see cref="T:Svg2Xaml.SvgReaderOptions"/> instance.
+            </summary>
+        </member>
+        <member name="M:Svg2Xaml.SvgReaderOptions.#ctor(System.Boolean)">
+            <summary>
+              Initializes a new <see cref="T:Svg2Xaml.SvgReaderOptions"/> instance.
+            </summary>
+            <param name="ignoreEffects">
+              Specifies whether filter effects should be applied using WPF bitmap 
+              effects.
+            </param>
+        </member>
+        <member name="P:Svg2Xaml.SvgReaderOptions.IgnoreEffects">
+            <summary>
+              Gets or sets whether SVG effects should either be ignored or 
+              converted to <see cref="T:System.Windows.Media.Effects.BitmapEffect">bitmap effects</see>.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgRectElement">
+            <summary>
+              Represents a &lt;rect&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgStyleElement">
+            <summary>
+              Represents a &lt;style&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgSVGElement">
+            <summary>
+              Represents an &lt;svg&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgSwitchElement">
+            <summary>
+              Represents a &lt;switch&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgSymbolElement">
+            <summary>
+              Represents a &lt;symbol&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgTextElement">
+            <summary>
+              Represents a &lt;text&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgTSpanElement">
+            <summary>
+              Represents a &lt;tspan&gt; element.
+            </summary>
+        </member>
+        <member name="T:Svg2Xaml.SvgUseElement">
+            <summary>
+              Represents an &lt;use&gt; element.
+            </summary>
+        </member>
+    </members>
+</doc>
