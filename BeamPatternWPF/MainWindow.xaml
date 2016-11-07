@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:BeamPatternWPF"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
         Title="MainWindow"
         Width="525"
         Height="350"
@@ -11,24 +12,51 @@
     <Window.Resources>
         <local:Model x:Key="model" />
     </Window.Resources>
-    <Grid>
-        <StackPanel>
-            <TextBlock Text="Параметры антенной решётки:" />
-            <StackPanel Orientation="Horizontal">
-                <TextBlock>КНД:</TextBlock>
-                <TextBlock Text="{Binding Source={StaticResource model}, Path=Antenna.D}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Шаг между излучателями:" />
-                <TextBox Width="50" Text="{Binding Source={StaticResource model}, Path=dx, UpdateSourceTrigger=PropertyChanged}" />
-            </StackPanel>
-            <ScrollBar Maximum="1"
+    <Grid DataContext="{StaticResource model}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <GroupBox Grid.Column="0" Header="Параметры">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>КНД:</TextBlock>
+                    <TextBlock Text="{Binding Source={StaticResource model}, Path=Antenna.D}" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Шаг между излучателями:" />
+                    <TextBox Text="{Binding Source={StaticResource model}, Path=dx, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+                <ScrollBar Maximum="1"
                        Minimum="0.01"
                        Orientation="Horizontal"
                        SmallChange="0.01"
                        Value="{Binding Source={StaticResource model},
                                        Path=dx,
                                        UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
+                <Button Content="Загрузить ДН из файла" Click="BeamLoadButton_Click"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Header="График">
+            <oxy:Plot>
+                <oxy:Plot.Axes>
+                    <oxy:LinearAxis Position="Top"
+                                    Title="θ"
+                                    MajorGridlineStyle="Solid"
+                                    MinorGridlineStyle="Dot"/>
+                    <oxy:LinearAxis Position="Left"
+                                    Title="20|lg(F(θ))|"
+                                    MajorGridlineStyle="Solid"
+                                    MinorGridlineStyle="Dot"
+                                    Maximum="0"
+                                    Minimum="-40"/>
+                </oxy:Plot.Axes>   
+                <oxy:Plot.Series>
+                    <oxy:LineSeries Title="F" ItemsSource="{Binding BeamPattern}"
+                                    StrokeThickness="2"
+                                    Color="Red"/>
+                </oxy:Plot.Series>
+            </oxy:Plot>
+        </GroupBox>
     </Grid>
 </Window>
