@@ -21,22 +21,19 @@ namespace BeamPatternWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        public MainWindow() { InitializeComponent(); }
 
         private void BeamLoadButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            if (button == null) return;
+            if(button == null) return;
             var model = button.DataContext as Model;
-            if (model == null) return;
+            if(model == null) return;
 
             var dialog = new OpenFileDialog();
             dialog.Title = "Выбор файла с данными ДН";
             dialog.Filter = "Текстовые данные (*.txt)|*.txt|Все файлы (*.*)|*.*";
-            if (dialog.ShowDialog() != true) return;
+            if(dialog.ShowDialog() != true) return;
 
             var file_name = dialog.FileName;
 

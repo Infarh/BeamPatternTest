@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,7 +52,7 @@ namespace BeamPatternWPF
             }
         }
 
-        public OxyPlot.DataPoint[] BeamPattern { get; private set; }
+        public DataPoint[] BeamPattern { get; private set; }
 
         public Model()
         {
@@ -74,11 +75,67 @@ namespace BeamPatternWPF
             BeamPattern = beam;
         }
 
+        private Complex[][] f_DataBeam;
+        private GenericAntenna f_Antenna0;
+
         public void ReadPatternFromFile(string file_name)
         {
             var file = new FileInfo(file_name);
-            if (!file.Exists) return;
+            if(!file.Exists) return;
 
+            var beam = new List<List<Complex>>();
+            List<Complex> data_list = null;
+
+            using(var data = file.OpenText())
+            {
+                data.ReadLine();
+                data.ReadLine();
+
+                while(!data.EndOfStream)
+                {
+                    var line = data.ReadLine();
+                    var values_str = line.Split(' ');
+                    var values = values_str
+                        .Where(s => s != null && s != "")
+                        .Select(s => s.Replace('.', ','))
+                        .Select(s => double.Parse(s))
+                        .ToArray();
+
+                    var th = values[0];
+                    var phi = values[1];
+                    var abs = values[2];
+                    var phase = values[4];
+
+                    if(th == 0)
+                    {
+                        data_list = new List<Complex>();
+                        beam.Add(data_list);
+                    }
+                    data_list.Add(new Complex(abs * Math.Cos(phase), abs * Math.Sin(phase)));
+                }
+            }
+
+            f_DataBeam = beam.Select(b => b.ToArray()).ToArray();
+            f_Antenna0 = new GenericAntenna(f_DataBeam[0].Concat(f_DataBeam[180].Skip(1).Reverse()).ToArray(), 1);
+        }
+
+        class GenericAntenna : Antenna
+        {
+            private readonly Complex[] f_BeamData;
+            private readonly double f_dTh;
+
+            public GenericAntenna(Complex[] BeamData, double dTh)
+            {
+                f_BeamData = BeamData;
+                f_dTh = dTh;
+            }
+
+            public override Complex Pattern(double th)
+            {
+                var th1 = th % (2 * Math.PI);
+                var i = (int)(th1/f_dTh);
+                return f_BeamData[i];
+            }      
         }
     }
 }
