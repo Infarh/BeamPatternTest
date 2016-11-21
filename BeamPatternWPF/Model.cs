@@ -4,9 +4,6 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Numerics;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using BeamPatternTest;
 using OxyPlot;
 
@@ -117,6 +114,7 @@ namespace BeamPatternWPF
 
             f_DataBeam = beam.Select(b => b.ToArray()).ToArray();
             f_Antenna0 = new GenericAntenna(f_DataBeam[0].Concat(f_DataBeam[180].Skip(1).Reverse()).ToArray(), 1);
+            f_Antenna0.Pattern((15 - 360 - 360) * Math.PI / 180);
         }
 
         class GenericAntenna : Antenna
@@ -130,12 +128,15 @@ namespace BeamPatternWPF
                 f_dTh = dTh;
             }
 
+            private const double pi2 = Math.PI * 2;
+            private const double toRad = Math.PI / 180;
             public override Complex Pattern(double th)
             {
-                var th1 = th % (2 * Math.PI);
-                var i = (int)(th1/f_dTh);
+                var th1 = th % pi2;
+                if(th1 < 0) th1 += pi2;
+                var i = (int)(th1 / (f_dTh * toRad));
                 return f_BeamData[i];
-            }      
+            }
         }
     }
 }
