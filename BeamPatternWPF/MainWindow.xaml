@@ -26,14 +26,17 @@
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Шаг между излучателями:" />
                     <TextBox Text="{Binding Source={StaticResource model}, Path=dx, UpdateSourceTrigger=PropertyChanged}" />
-                </StackPanel>
-                <ScrollBar Maximum="1"
-                       Minimum="0.01"
+                    <ScrollBar Minimum="0.01" Maximum="2" SmallChange="0.01"
                        Orientation="Horizontal"
-                       SmallChange="0.01"
-                       Value="{Binding Source={StaticResource model},
-                                       Path=dx,
-                                       UpdateSourceTrigger=PropertyChanged}" />
+                       Value="{Binding dx, Source={StaticResource model}, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel> 
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Число излучателей" />
+                    <TextBox Text="{Binding Source={StaticResource model}, Path=N, UpdateSourceTrigger=PropertyChanged}" />
+                    <ScrollBar Minimum="1" Maximum="100" SmallChange="1"
+                       Orientation="Horizontal"
+                       Value="{Binding N, Source={StaticResource model}, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel> 
                 <Button Content="Загрузить ДН из файла" Click="BeamLoadButton_Click"/>
             </StackPanel>
         </GroupBox>
@@ -52,7 +55,7 @@
                                     Minimum="-40"/>
                 </oxy:Plot.Axes>   
                 <oxy:Plot.Series>
-                    <oxy:LineSeries Title="F" ItemsSource="{Binding BeamPattern}"
+                    <oxy:LineSeries Title="F" ItemsSource="{Binding BeamPattern, Mode=OneWay}"
                                     StrokeThickness="2"
                                     Color="Red"/>
                 </oxy:Plot.Series>

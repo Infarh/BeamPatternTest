@@ -13,43 +13,61 @@ namespace BeamPatternWPF
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string Name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Name));
-        }
+        private void OnPropertyChanged(string Name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Name));
 
         private LinearAntennaArray antenna;
 
-        public LinearAntennaArray Antenna => antenna;
+        /// <summary>Антенная решётка</summary>
+        public LinearAntennaArray Antenna
+        {
+            get { return antenna; }
+            set
+            {
+                if(Equals(antenna, value)) return;
+                antenna = value;
+                OnPropertyChanged(nameof(Antenna));
+            }
+        }
 
+        /// <summary>Шаг элементов решётки</summary>
         public double dx
         {
             get { return antenna.dx; }
             set
             {
-                antenna.dx = value;
+                if(antenna.dx.Equals(value)) return;
+                antenna = new LinearAntennaArray(value, antenna.N, i => new Dipole());
+                OnPropertyChanged(nameof(dx));
+                OnPropertyChanged(nameof(Antenna));
                 CalculateBeam();
-                OnPropertyChanged("dx");
-                OnPropertyChanged("Antenna");
-                OnPropertyChanged("BeamPattern");
             }
         }
 
+        /// <summary>Число элементов решётки</summary>
         public int N
         {
             get { return antenna.N; }
             set
             {
-                var antenna_dx = antenna.dx;
-                antenna = new LinearAntennaArray(antenna_dx, value, i => new Dipole());
+                if(antenna.N.Equals(value)) return;
+                antenna = new LinearAntennaArray(antenna.dx, value, i => new Dipole());
+                OnPropertyChanged(nameof(N));
+                OnPropertyChanged(nameof(Antenna));
                 CalculateBeam();
-                OnPropertyChanged("N");
-                OnPropertyChanged("Antenna");
-                OnPropertyChanged("BeamPattern");
             }
         }
 
-        public DataPoint[] BeamPattern { get; private set; }
+        /// <summary>Диаграмма направленности</summary>
+        public DataPoint[] BeamPattern
+        {
+            get { return f_BeamPattern; }
+            private set
+            {
+                if(Equals(f_BeamPattern, value)) return;
+                f_BeamPattern = value;
+                OnPropertyChanged(nameof(BeamPattern));
+            }
+        }
 
         public Model()
         {
@@ -74,6 +92,7 @@ namespace BeamPatternWPF
 
         private Complex[][] f_DataBeam;
         private GenericAntenna f_Antenna0;
+        private DataPoint[] f_BeamPattern;
 
         public void ReadPatternFromFile(string file_name)
         {
@@ -90,12 +109,10 @@ namespace BeamPatternWPF
 
                 while(!data.EndOfStream)
                 {
-                    var line = data.ReadLine();
-                    var values_str = line.Split(' ');
-                    var values = values_str
-                        .Where(s => s != null && s != "")
+                    var values = data.ReadLine().Split(' ')
+                        .Where(s => !string.IsNullOrEmpty(s))
                         .Select(s => s.Replace('.', ','))
-                        .Select(s => double.Parse(s))
+                        .Select(double.Parse)
                         .ToArray();
 
                     var th = values[0];
@@ -132,10 +149,26 @@ namespace BeamPatternWPF
             private const double toRad = Math.PI / 180;
             public override Complex Pattern(double th)
             {
-                var th1 = th % pi2;
-                if(th1 < 0) th1 += pi2;
-                var i = (int)(th1 / (f_dTh * toRad));
-                return f_BeamData[i];
+                th %= pi2;
+                if(th < 0) th += pi2;
+                var i = (int)(th / (f_dTh * toRad));
+                var th1 = i * f_dTh * toRad;
+                var th2 = (i + 1) * f_dTh * toRad;
+                var f1 = f_BeamData[i];
+                var f2 = f_BeamData[i + 1];
+                return Interpolate(th, th1, f1, th2, f2);
+            }
+
+            private static Complex Interpolate(double th, double th1, Complex F1, double th2, Complex F2)
+            {
+                return new Complex(
+                    real: Interpolate(th, th1, F1.Real, th2, F2.Real),
+                    imaginary: Interpolate(th, th1, F1.Imaginary, th2, F2.Imaginary));
+            }
+
+            private static double Interpolate(double th, double th1, double F1, double th2, double F2)
+            {
+                return F1 + (th - th1) * (F2 - F1) / (th2 - th1);
             }
         }
     }
