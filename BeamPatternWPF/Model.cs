@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Xml.Linq;
 using BeamPatternTest;
 using OxyPlot;
 
@@ -71,6 +72,10 @@ namespace BeamPatternWPF
 
         public Model()
         {
+            var xml_data = XDocument.Load("Array.xml");
+            var antenna_array = new AntennaArray(xml_data.Root);
+            var F = antenna_array.Pattern(5 * Math.PI / 180);
+
             antenna = new LinearAntennaArray(0.5, 5, i => new Dipole());
             CalculateBeam();
         }

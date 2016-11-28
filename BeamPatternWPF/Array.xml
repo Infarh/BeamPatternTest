@@ -1,0 +1,7 @@
+﻿<AntennaArray>
+  <Element x="-1"   A="0.2"   Ph="-3.14159265" Type="Uniform"/>
+  <Element x="-0.5" A="0.766" Ph="-1.571"      Type="Dipole"/>
+  <Element x="0"    A="1"     Ph="0"           Type="Vibrator"/>
+  <Element x="0.5"  A="0.766" Ph="1.571"       Type="Dipole"/>
+  <Element x="1"    A="0.2"   Ph="3.14159265"  Type="Uniform"/>
+</AntennaArray>

@@ -12,7 +12,9 @@ namespace BeamPatternTest
         /// <summary>Длина вибратора в длинах волн</summary>
         public double L { get { return l; } set { l = value; } }
 
-        /// <summary>Новый вибратор</summary>
+        public Vibrator() : this(0.5) { }
+
+        /// <summary>Новый вибратор</summary>             
         /// <param name="l">Длина вибратора в длинах волн</param>
         public Vibrator(double l) { this.l = l; }
 
