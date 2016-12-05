@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="Antenna.cs" />
     <Compile Include="AntennaArray.cs" />
+    <Compile Include="AntennaElement.cs" />
+    <Compile Include="BeamPattern.cs" />
     <Compile Include="Dipole.cs" />
     <Compile Include="LinearAntennaArray.cs" />
     <Compile Include="Program.cs" />

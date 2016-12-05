@@ -8,10 +8,10 @@ namespace BeamPatternTest
 {
     public class AntennaArray : Antenna
     {
-        private Antenna[] f_Elements;
-        private double[] f_X;
-        private double[] f_A;
-        private double[] f_Ph;
+        private readonly Antenna[] f_Elements;
+        private readonly double[] f_X;
+        private readonly double[] f_A;
+        private readonly double[] f_Ph;
 
         public AntennaArray(XElement ArrayNode)
         {
@@ -43,24 +43,22 @@ namespace BeamPatternTest
             f_Ph = ph.ToArray();
         }
 
+        /// <inheritdoc />
         public override Complex Pattern(double th)
         {
-            var K = f_A.Aggregate(0d, (v, V) => v + V);
             var sin_th = Math.Sin(th);
 
-            var S = new Complex();
+            var s = new Complex();
 
-            for(int i = 0; i < f_Elements.Length; i++)
+            for(var i = 0; i < f_Elements.Length; i++)
             {
-                var f1 = f_Elements[i].Pattern(th);
-                f1 *= f_A[i];
-                f1 *= new Complex(Math.Cos(f_Ph[i]), Math.Sin(f_Ph[i]));
-                var t = 2 * Math.PI * f_X[i] * sin_th;
-                f1 *= new Complex(Math.Cos(t), Math.Sin(-t));
-                S += f1;
+                var t = Service.pi2 * f_X[i] * sin_th;
+                s += f_A[i]
+                     * new Complex(Math.Cos(f_Ph[i]), Math.Sin(f_Ph[i])) * f_Elements[i].Pattern(th)
+                     * new Complex(Math.Cos(t), Math.Sin(-t));
             }
 
-            return S / K;
+            return s / f_A.Sum();
         }
     }
 }

@@ -23,11 +23,10 @@ namespace BeamPatternTest
         /// <returns>Значение диаграммы направленности для указанного значения угла</returns>
         public override Complex Pattern(double th)
         {
-            var result = 2 * Math.PI * l * Math.Sin(th);
-            result = Math.Cos(result);
-            result -= Math.Cos(2 * Math.PI * l);
+            var result = Service.pi2 * l * Math.Sin(th);
+            result = Math.Cos(result) - Math.Cos(Service.pi2 * l);
             result /= Math.Cos(th);
-            result /= (1 - Math.Cos(2 * Math.PI * l));
+            result /= 1 - Math.Cos(Service.pi2 * l);
             return result;
         }
     }

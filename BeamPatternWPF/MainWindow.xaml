@@ -1,65 +1,160 @@
-﻿<Window x:Class="BeamPatternWPF.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:BeamPatternWPF"
+        xmlns:l="clr-namespace:BeamPatternWPF"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+        xmlns:oxyPlot="clr-namespace:OxyPlot;assembly=OxyPlot"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="BeamPatternWPF.MainWindow"
+        mc:Ignorable="d"
         Title="MainWindow"
-        Width="525"
-        Height="350"
-        mc:Ignorable="d">
-    <Window.Resources>
-        <local:Model x:Key="model" />
-    </Window.Resources>
-    <Grid DataContext="{StaticResource model}">
+        d:DesignWidth="800" d:DesignHeight="600">
+    <Window.DataContext>
+        <l:Model />
+    </Window.DataContext>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <GroupBox Grid.Column="0" Header="Параметры">
             <StackPanel>
+                <StackPanel.Resources>
+                    <DataTemplate DataType="{x:Type l:LambdaCommand}">
+                        <Button Content="{Binding Name}" Command="{Binding}"/>
+                    </DataTemplate>
+                </StackPanel.Resources>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock>КНД:</TextBlock>
-                    <TextBlock Text="{Binding Source={StaticResource model}, Path=Antenna.D}" />
+                    <TextBlock><Run Text="КНД:"/></TextBlock>
+                    <TextBlock Text="{Binding Antenna.D, StringFormat=\{0:0.##\}}" />
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Шаг между излучателями:" />
-                    <TextBox Text="{Binding Source={StaticResource model}, Path=dx, UpdateSourceTrigger=PropertyChanged}" />
-                    <ScrollBar Minimum="0.01" Maximum="2" SmallChange="0.01"
+                    <TextBox Text="{Binding dx, UpdateSourceTrigger=PropertyChanged}" />
+                    <ScrollBar Minimum="0.01" Maximum="2" SmallChange="0.01" LargeChange="0.1"
                        Orientation="Horizontal"
-                       Value="{Binding dx, Source={StaticResource model}, UpdateSourceTrigger=PropertyChanged}" />
-                </StackPanel> 
+                       Value="{Binding dx, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Число излучателей" />
-                    <TextBox Text="{Binding Source={StaticResource model}, Path=N, UpdateSourceTrigger=PropertyChanged}" />
-                    <ScrollBar Minimum="1" Maximum="100" SmallChange="1"
+                    <TextBox Text="{Binding N, UpdateSourceTrigger=PropertyChanged}" />
+                    <ScrollBar Minimum="2" Maximum="100" SmallChange="1"
                        Orientation="Horizontal"
-                       Value="{Binding N, Source={StaticResource model}, UpdateSourceTrigger=PropertyChanged}" />
-                </StackPanel> 
-                <Button Content="Загрузить ДН из файла" Click="BeamLoadButton_Click"/>
+                       Value="{Binding N, UpdateSourceTrigger=PropertyChanged}" LargeChange="5" />
+                </StackPanel>
+                <Line X2 ="{Binding ActualWidth, RelativeSource={RelativeSource Self}}" Stroke="Gray" StrokeThickness="2" Margin="0,5"/>
+                <ItemsControl ItemsSource="{Binding Converter={l:CommandsExtractor}}"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox Grid.Column="1" Header="График">
-            <oxy:Plot>
-                <oxy:Plot.Axes>
-                    <oxy:LinearAxis Position="Top"
-                                    Title="θ"
-                                    MajorGridlineStyle="Solid"
-                                    MinorGridlineStyle="Dot"/>
-                    <oxy:LinearAxis Position="Left"
-                                    Title="20|lg(F(θ))|"
-                                    MajorGridlineStyle="Solid"
-                                    MinorGridlineStyle="Dot"
-                                    Maximum="0"
-                                    Minimum="-40"/>
-                </oxy:Plot.Axes>   
-                <oxy:Plot.Series>
-                    <oxy:LineSeries Title="F" ItemsSource="{Binding BeamPattern, Mode=OneWay}"
-                                    StrokeThickness="2"
-                                    Color="Red"/>
-                </oxy:Plot.Series>
-            </oxy:Plot>
+        <GroupBox Grid.Column="1" Header="Диаграмма направленности">
+            <TabControl>
+                <TabItem Header="График">
+                    <oxy:PlotView LegendPosition="BottomRight" LegendBorder="Gray" LegendBorderThickness="1" 
+                                  LegendPlacement="Inside" LegendTitle="Диаграммы" LegendBackground="#BFFFFFFF">
+                        <oxy:PlotView.Annotations>
+                            <oxy:LineAnnotation X="{Binding Beam.LeftBeamEdge07Deg}"
+                                                LineStyle="Solid"
+                                                MaximumY="-3" 
+                                                MinimumY="-6" 
+                                                Type="Vertical"/>
+                            <oxy:LineAnnotation X="{Binding Beam.RightBeamEdge07Deg}"
+                                                LineStyle="Solid" 
+                                                MaximumY="-3" 
+                                                MinimumY="-6" 
+                                                Type="Vertical"/>
+                            <oxy:LineAnnotation Y="-5" 
+                                                MinimumX="{Binding Beam.LeftBeamEdge07Deg}" 
+                                                MaximumY="{Binding Beam.RightBeamEdge07Deg}" 
+                                                Type="Horizontal" 
+                                                MaximumX="10" 
+                                                LineStyle="Dot" 
+                                                Text="{Binding Beam.BeamWidthDeg, ConverterParameter=2, Converter={l:RoundConverter}}"/>
+                            <oxy:LineAnnotation Type="Horizontal" Color="Red"
+                                                Y="{Binding Beam.SideLobLevel_db}"
+                                                MinimumX="{Binding Beam.RightBeamEdge0Deg}"
+                                                Text="{Binding Beam.SideLobLevel_db, ConverterParameter=2, Converter={l:RoundConverter}}"/>
+                            <oxy:LineAnnotation Type="Horizontal" Color="Red"
+                                                Y="{Binding Beam.SideLobLevel_db}"
+                                                MaximumX="{Binding Beam.LeftBeamEdge0Deg}"/>
+                        </oxy:PlotView.Annotations>
+                        <oxy:PlotView.Axes>
+                            <oxy:LinearAxis Position="Top"
+                                            Title="θ" StringFormat="0.###°"
+                                            MajorGridlineStyle="Solid" 
+                                            MajorGridlineColor="DarkGray" 
+                                            MajorGridlineThickness="1"
+                                            MinorGridlineStyle="Dash"
+                                            MinorGridlineColor="LightGray"
+                                            MinorGridlineThickness="0.5" 
+                                            ExtraGridlineColor="DarkRed"
+                                            ExtraGridlineStyle="LongDash"
+                                            ExtraGridlineThickness="2" 
+                                            TitlePosition="0.95" Unit="°" >
+                                <oxy:LinearAxis.ExtraGridlines>
+                                    <x:Array Type="{x:Type System:Double}">
+                                        <System:Double>-90</System:Double>
+                                        <System:Double>90</System:Double>
+                                    </x:Array>
+                                </oxy:LinearAxis.ExtraGridlines>
+                            </oxy:LinearAxis>
+                            <oxy:LinearAxis Position="Left"
+                                            Title="F(θ)" StringFormat="0.###"
+                                            MajorGridlineStyle="Solid" 
+                                            MajorGridlineColor="DarkGray" 
+                                            MajorGridlineThickness="1"
+                                            MinorGridlineStyle="Dash"
+                                            MinorGridlineColor="LightGray"
+                                            MinorGridlineThickness="0.5" 
+                                            ExtraGridlineColor="DarkRed"
+                                            ExtraGridlineStyle="LongDash"
+                                            ExtraGridlineThickness="2" Unit="дБ" TitleFormatString="{}{0}, {1}"
+                                            Maximum="0" Minimum="-40">
+                                <oxy:LinearAxis.ExtraGridlines>
+                                    <x:Array Type="{x:Type System:Double}">
+                                        <System:Double>-3</System:Double>
+                                        <System:Double>-13</System:Double>
+                                    </x:Array>
+                                </oxy:LinearAxis.ExtraGridlines>
+                            </oxy:LinearAxis>
+                        </oxy:PlotView.Axes>
+                        <oxy:LineSeries Title="F(θ), дБ" 
+                                            ItemsSource="{Binding Beam}"  
+                                            DataFieldX="AngleDeg" 
+                                            DataFieldY="db" 
+                                            Color="Red"  
+                                            StrokeThickness="2"/>
+                        <oxy:LineSeries Title="F1(θ), дБ"
+                                            ItemsSource="{Binding Antenna.Elements[0].Beam}"
+                                            DataFieldX="AngleDeg"
+                                            DataFieldY="db"
+                                            StrokeThickness="1"
+                                            Color="Blue"/>
+                    </oxy:PlotView>
+                </TabItem>
+                <TabItem Header="Таблица" DataContext="{Binding Beam}">
+                    <DataGrid ItemsSource="{Binding}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Angle" Binding="{Binding AngleDeg, StringFormat=0.##°}" Width="Auto"/>
+                            <DataGridTextColumn Header="Abs" Binding="{Binding Abs, StringFormat=0.####}" Width="Auto"/>
+                            <DataGridTextColumn Header="Phase" Binding="{Binding Phase, StringFormat=0.###}" Width="Auto"/>
+                            <DataGridTextColumn Header="db" Binding="{Binding db, StringFormat=0.###}" Width="Auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Параметры">
+                    <StackPanel>
+                        <UniformGrid Columns="3">
+                            <TextBlock><Run Text="КНД:"/><Run Text=" "/><Run Text="{Binding Beam.D, Mode=OneWay, StringFormat=\{0:0.##\}}"/><Run Text=" "/><Run Text="{Binding Beam.Ddb, Mode=OneWay, StringFormat=(\{0:0.## дБ\})}"/></TextBlock>
+                            <TextBlock><Run Text="Θ:"/><Run Text=" "/><Run Text="{Binding Beam.th1_deg, Mode=OneWay, StringFormat=\{0:0.##°\}}"/><Run Text=" "/><Run Text=":"/><Run Text=" "/><Run Text="{Binding Beam.th2_deg, Mode=OneWay, StringFormat=\{0:0.##°\}}"/><Run Text=" "/><Run Text="{Binding Beam.DeltaTh_deg, Mode=OneWay, StringFormat=\{0:(0.##°)\}}"/><Run Text=" "/><Run Text="{Binding Beam.dth_deg, Mode=OneWay, StringFormat=\{0:dθ\=0.##°)\}}"/><Run Text=" "/><Run Text="{Binding Beam.PointsCount, Mode=OneWay, StringFormat=N:\{0\}}"/></TextBlock>
+                            <TextBlock><Run Text="Положение луча"/><Run Text=" "/><Run Text="{Binding Beam.Maximum.AngleDeg, Mode=OneWay, StringFormat=\{0:0.##°\}}"/></TextBlock>
+                            <TextBlock><Run Text="Ширина луча факт.:"/><Run Text=" "/><Run Text="{Binding Beam.BeamWidthDeg, Mode=OneWay, StringFormat=\{0:0.##°\}}"/></TextBlock>
+                            <TextBlock><Run Text="Ширина луча теор.:"/><Run Text=" "/><Run Text="{Binding DataContext.Antenna.BeamWidth07Deg, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Window}}, StringFormat=\{0:0.##°\}}"/></TextBlock>
+                            <TextBlock><Run Text="УБЛ:"/><Run Text=" "/><Run Text="{Binding Beam.SideLobLevel_db, Mode=OneWay, StringFormat=\{0:0.## дБ\}}"/></TextBlock>
+                        </UniformGrid>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
         </GroupBox>
     </Grid>
 </Window>
