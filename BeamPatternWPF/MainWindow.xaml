@@ -40,26 +40,43 @@
                 <Button Content="Загрузить ДН из файла" Click="BeamLoadButton_Click"/>
             </StackPanel>
         </GroupBox>
-        <GroupBox Grid.Column="1" Header="График">
-            <oxy:Plot>
-                <oxy:Plot.Axes>
-                    <oxy:LinearAxis Position="Top"
+        <TabControl Grid.Column="1">
+            <TabItem Header="График">
+                <oxy:Plot>
+                    <oxy:Plot.Axes>
+                        <oxy:LinearAxis Position="Top"
                                     Title="θ"
                                     MajorGridlineStyle="Solid"
                                     MinorGridlineStyle="Dot"/>
-                    <oxy:LinearAxis Position="Left"
+                        <oxy:LinearAxis Position="Left"
                                     Title="20|lg(F(θ))|"
                                     MajorGridlineStyle="Solid"
                                     MinorGridlineStyle="Dot"
                                     Maximum="0"
                                     Minimum="-40"/>
-                </oxy:Plot.Axes>   
-                <oxy:Plot.Series>
-                    <oxy:LineSeries Title="F" ItemsSource="{Binding BeamPattern, Mode=OneWay}"
+                    </oxy:Plot.Axes>
+                    <oxy:Plot.Series>
+                        <oxy:LineSeries Title="F" ItemsSource="{Binding Antenna.Beam}"
+                                    DataFieldX="AngleDeg"
+                                    DataFieldY="db"
                                     StrokeThickness="2"
                                     Color="Red"/>
-                </oxy:Plot.Series>
-            </oxy:Plot>
-        </GroupBox>
+                    </oxy:Plot.Series>
+                </oxy:Plot>
+            </TabItem>
+            <TabItem Header="Свойства ДН" DataContext="{Binding Antenna.Beam}">
+                <StackPanel>
+                    <TextBlock>
+                        <Run Text="Положение максимума ДН:"/>
+                        <Run Text="{Binding MaxPosAngleDeg, Mode=OneWay}"/>
+                    </TextBlock>
+
+                    <TextBlock>
+                        <Run Text="Ширина ДН:"/>
+                        <Run Text="{Binding BeamWidthDeg, Mode=OneWay}"/>
+                    </TextBlock>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

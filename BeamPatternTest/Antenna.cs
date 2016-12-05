@@ -8,6 +8,8 @@ namespace BeamPatternTest
     /// </summary>
     public abstract class Antenna
     {
+        public BeamPatern Beam => new BeamPatern(Pattern, -Math.PI, Math.PI, 1 * Math.PI / 180);
+
         /// <summary>КНД</summary>
         public double D => GetKND();
 
